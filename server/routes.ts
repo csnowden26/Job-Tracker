@@ -39,12 +39,23 @@ export async function registerRoutes(
     if (body.roleTitle !== undefined) updates.roleTitle = body.roleTitle;
     if (body.jobUrl !== undefined) updates.jobUrl = body.jobUrl;
     if (body.notes !== undefined) updates.notes = body.notes;
+
     if (body.salary !== undefined) {
       if (typeof body.salary !== "string" || body.salary.trim() === "") {
         return res.status(400).json({ message: "Salary is required" });
       }
       updates.salary = body.salary;
     }
+
+    if (body.contactName !== undefined) {
+      if (typeof body.contactName !== "string" || body.contactName.trim() === "") {
+        return res.status(400).json({ message: "Point of contact name is required" });
+      }
+      updates.contactName = body.contactName;
+    }
+
+    if (body.contactPhone !== undefined) updates.contactPhone = body.contactPhone;
+    if (body.contactEmail !== undefined) updates.contactEmail = body.contactEmail;
 
     if (body.status !== undefined) {
       if (!STATUSES.includes(body.status)) {

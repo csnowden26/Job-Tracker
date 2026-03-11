@@ -43,6 +43,16 @@ export function validateProspect(data: Record<string, unknown>): { valid: boolea
     errors.push("Salary is required");
   }
 
+  if (!data.contactName || typeof data.contactName !== "string" || data.contactName.trim() === "") {
+    errors.push("Point of contact name is required");
+  }
+
+  const phone = typeof data.contactPhone === "string" ? data.contactPhone.trim() : "";
+  const email = typeof data.contactEmail === "string" ? data.contactEmail.trim() : "";
+  if (phone.length === 0 && email.length === 0) {
+    errors.push("At least one contact method (phone or email) is required");
+  }
+
   return { valid: errors.length === 0, errors };
 }
 

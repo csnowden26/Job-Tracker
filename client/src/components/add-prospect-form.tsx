@@ -37,6 +37,9 @@ export function AddProspectForm({ onSuccess }: { onSuccess?: () => void }) {
       status: "Bookmarked",
       interestLevel: "Medium",
       salary: "",
+      contactName: "",
+      contactPhone: "",
+      contactEmail: "",
       notes: "",
     },
   });
@@ -170,6 +173,63 @@ export function AddProspectForm({ onSuccess }: { onSuccess?: () => void }) {
                     ))}
                   </SelectContent>
                 </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="border rounded-md p-3 space-y-3 bg-muted/30">
+          <p className="text-sm font-medium">Point of Contact</p>
+
+          <FormField
+            control={form.control}
+            name="contactName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contact Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. Jane Smith" {...field} data-testid="input-contact-name" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="contactPhone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. 555-867-5309"
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-contact-phone"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="contactEmail"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email Address</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. jane@example.com"
+                    type="email"
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-contact-email"
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
