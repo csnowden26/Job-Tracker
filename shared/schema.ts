@@ -22,6 +22,9 @@ export const prospects = pgTable("prospects", {
   status: text("status").notNull().default("Bookmarked"),
   interestLevel: text("interest_level").notNull().default("Medium"),
   salary: text("salary").notNull().default(""),
+  contactName: text("contact_name").notNull().default(""),
+  contactPhone: text("contact_phone"),
+  contactEmail: text("contact_email"),
   notes: text("notes"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
@@ -37,7 +40,20 @@ export const insertProspectSchema = createInsertSchema(prospects).omit({
   salary: z.string().min(1, "Salary is required"),
   jobUrl: z.string().optional().nullable(),
   notes: z.string().optional().nullable(),
-});
+  contactName: z.string().min(1, "Point of contact name is required"),
+  contactPhone: z.string().optional().nullable(),
+  contactEmail: z.string().optional().nullable(),
+}).refine(
+  (data) => {
+    const phone = data.contactPhone?.trim() ?? "";
+    const email = data.contactEmail?.trim() ?? "";
+    return phone.length > 0 || email.length > 0;
+  },
+  {
+    message: "At least one contact method (phone or email) is required",
+    path: ["contactPhone"],
+  }
+);
 
 export type InsertProspect = z.infer<typeof insertProspectSchema>;
 export type Prospect = typeof prospects.$inferSelect;
