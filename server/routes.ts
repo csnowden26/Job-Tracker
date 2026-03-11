@@ -39,6 +39,12 @@ export async function registerRoutes(
     if (body.roleTitle !== undefined) updates.roleTitle = body.roleTitle;
     if (body.jobUrl !== undefined) updates.jobUrl = body.jobUrl;
     if (body.notes !== undefined) updates.notes = body.notes;
+    if (body.salary !== undefined) {
+      if (typeof body.salary !== "string" || body.salary.trim() === "") {
+        return res.status(400).json({ message: "Salary is required" });
+      }
+      updates.salary = body.salary;
+    }
 
     if (body.status !== undefined) {
       if (!STATUSES.includes(body.status)) {

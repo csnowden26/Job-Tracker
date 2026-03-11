@@ -21,6 +21,7 @@ export const prospects = pgTable("prospects", {
   jobUrl: text("job_url"),
   status: text("status").notNull().default("Bookmarked"),
   interestLevel: text("interest_level").notNull().default("Medium"),
+  salary: text("salary").notNull().default(""),
   notes: text("notes"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
@@ -33,6 +34,7 @@ export const insertProspectSchema = createInsertSchema(prospects).omit({
   roleTitle: z.string().min(1, "Role title is required"),
   status: z.enum(STATUSES).default("Bookmarked"),
   interestLevel: z.enum(INTEREST_LEVELS).default("Medium"),
+  salary: z.string().min(1, "Salary is required"),
   jobUrl: z.string().optional().nullable(),
   notes: z.string().optional().nullable(),
 });
